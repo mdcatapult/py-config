@@ -29,8 +29,8 @@ Internally the config object uses the ConfigTree structure that is part of pyhoc
 
 ### Config Initialisation
 The `get_config` function looks for :
-- argument `--common` or environmental variable `PY_ENV_AWARE_COMMON` to specify a valid filepath for a common config file (in either JSON or YAML format); and
-- argument `--config` or environmental variable `PY_ENV_AWARE_CONFIG` to specify a valid filepath for a config file 
+- argument `--common` or environmental variable `KLEIN_COMMON` to specify a valid filepath for a common config file (in either JSON or YAML format); and
+- argument `--config` or environmental variable `KLEIN_CONFIG` to specify a valid filepath for a config file 
 
 
 N.B. Passing both environmental variables _and_ arguments for either config or common is ambiguous and is therefore NOT accepted.
@@ -78,15 +78,15 @@ Example config files are also provided in [json](example.config.json) and [yaml]
 ### Order precedence
 The configs are applied to the config object in the following order: 
 
-1. Common config as identified via argument `--common` or environmental variable `PY_ENV_AWARE_COMMON`
+1. Common config as identified via argument `--common` or environmental variable `KLEIN_COMMON`
 2. Config that is injected via the Class constructor
-3. Config that is identified via the argument `--config` or environmental variable `PY_ENV_AWARE_CONFIG`
+3. Config that is identified via the argument `--config` or environmental variable `KLEIN_CONFIG`
 
 
 Configs will override any previous values as they are applied.
 
 ### Environment Aware
-The module is "Environment Aware", i.e. it will look for envrionment variables in the first instance. If a valid variable exists then this will be used regardless of any config that may have been supplied.
+The module is "Environment Aware", i.e. it will look for environment variables in the first instance. If a valid variable exists then this will be used regardless of any config that may have been supplied.
 
 The path is transformed by converting the string to uppercase and replacing all dots with underscores.
 

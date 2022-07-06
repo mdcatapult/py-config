@@ -168,7 +168,7 @@ class TestConfigWithFilesWithEnvironmentalVariable:
         assert config["level1.level2.key"] == "value"
         assert config["level1"]["level2"]["key"] == "value"
 
-    @mock.patch.dict(os.environ, {'PY_ENV_AWARE_CONFIG': 'dummy.conf', 'PY_ENV_AWARE_COMMON': 'dummy2.conf'})
+    @mock.patch.dict(os.environ, {'KLEIN_CONFIG': 'dummy.conf', 'KLEIN_COMMON': 'dummy2.conf'})
     @mock.patch('codecs.open', new_callable=mock.mock_open, read_data=hoconString)
     def test_with_hocon_files_config_and_common(self, mock_open):
         from src.klein_config.config import get_config
