@@ -48,7 +48,7 @@ publish-unstable:
   stage: publish
   script:
     - pipenv run python setup.py sdist bdist_wheel
-    - pipenv run twine upload -u gitlab-ci-token -p $CI_TOKEN repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi-unstable dist/*
+    - TWINE_PASSWORD=${CI_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
   except:
     refs:
       - master
