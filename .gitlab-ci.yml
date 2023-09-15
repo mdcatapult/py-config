@@ -12,14 +12,12 @@ stages:
   - publish
 
 default:
-  image: registry.mdcatapult.io/informatics/docker-images/ci/python:3.7
+  image: registry.gitlab.com/medicines-discovery-catapult/informatics/docker-images/ci/python:3.7
   before_script:
   - pipenv install --dev
 
 lint:
   stage: test
-  tags:
-    - wopr
   script:
     - pipenv run pylint --rcfile=.pylintrc src
   except:
@@ -30,19 +28,16 @@ lint:
 
 test:
   stage: test
-  tags:
-    - wopr
   script:
     - pipenv run python -m pytest --cov-report term:skip-covered --cov src/ tests/
   coverage: '/TOTAL.*\s+(\d+%)$/'
 
 publish-stable:
   stage: publish
-  tags:
-    - wopr
   script:
     - pipenv run python setup.py sdist bdist_wheel
-    - pipenv run twine upload -u $NEXUS_USERNAME -p $NEXUS_PASSWORD --repository-url https://nexus.wopr.inf.mdc/repository/pypi-stable/ dist/*
+    - pip install build twine
+    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
     - pipenv run twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD --repository-url https://upload.pypi.org/legacy/ dist/*
   only:
     refs:
@@ -52,11 +47,10 @@ publish-stable:
 
 publish-unstable:
   stage: publish
-  tags:
-    - wopr
   script:
     - pipenv run python setup.py sdist bdist_wheel
-    - pipenv run twine upload -u $NEXUS_USERNAME -p $NEXUS_PASSWORD --repository-url https://nexus.wopr.inf.mdc/repository/pypi-unstable/ dist/*
+    - pip install build twine
+    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --skip-existing --repository-url ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/pypi dist/*
   except:
     refs:
       - master
@@ -65,9 +59,6 @@ publish-unstable:
 
 release:
   stage: release
-  image: registry.mdcatapult.io/informatics/docker-images/ci/python:3.7
-  tags:
-    - wopr
   before_script:
     - ''
   script:
