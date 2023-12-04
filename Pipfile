@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 pyhocon = "*"
-PyYAML = ">=5.1,<6"
+PyYAML = ">=6,<7"
 
 [dev-packages]
 pytest = "*"
@@ -16,4 +16,4 @@ pipenv-setup = "*"
 twine = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.10"
