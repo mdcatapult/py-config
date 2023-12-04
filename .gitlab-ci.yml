@@ -12,7 +12,7 @@ stages:
   - publish
 
 default:
-  image: registry.gitlab.com/medicines-discovery-catapult/informatics/docker-images/ci/python:3.7
+  image: registry.gitlab.com/medicines-discovery-catapult/informatics/docker-images/ci/python:3.10
   before_script:
   - pipenv install --dev
 

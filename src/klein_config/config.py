@@ -94,7 +94,7 @@ class EnvironmentAwareConfig(ConfigTree):
 
         def apply(param):
             if not param:
-                param = dict()
+                param = {}
 
             c = ConfigFactory.from_dict(param) if (isinstance(param, dict)) else load_file(param)
             ConfigTree.merge_configs(self, c)
