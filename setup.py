@@ -40,7 +40,7 @@ setup(
     license="Apache V2",
     packages=find_packages("src"),
     package_dir={"": "src"},
-    install_requires=["pyhocon", "pyyaml<6,>=5.1"],
+    install_requires=["pyhocon", "pyyaml>=6,<7"],
     zip_safe=True,
     include_package_data=True
 )
