@@ -126,6 +126,17 @@ source venv/bin/activate    // start the virtual environment
 pipenv install --dev        // install dependencies - you should now be able to run the tests with the above commands
 ```
 
+### Known issue
+
+#### Library does not install on some python versions.
+This issue has appeared on a few occasions due to a tagged dependency on pyyaml. This library requires certain version of python to install. 
+
+If this library does not install on pyyaml failure, you can still install and use this library with using --no-deps flag and manually install the dependencies. 
+
+```
+pip install --no-deps klein_config   # Don't forget to install the dependencies as needed
+```
+
 
 ### License
 This project is licensed under the terms of the Apache 2 license, which can be found in the repository as `LICENSE.txt`
