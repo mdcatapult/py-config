@@ -37,7 +37,7 @@ publish-stable:
   script:
     - pipenv run python setup.py sdist bdist_wheel
     - pip install build twine
-    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url ${CI_API_V4_URL}/projects/50550924/packages/pypi dist/*
+    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --repository-url ${CI_API_V4_URL}/projects/${REGISTRY_HOST_PROJECT_ID}/packages/pypi dist/*
     - pipenv run twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD --repository-url https://upload.pypi.org/legacy/ dist/*
   only:
     refs:
@@ -50,7 +50,7 @@ publish-unstable:
   script:
     - pipenv run python setup.py sdist bdist_wheel
     - pip install build twine
-    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --skip-existing --repository-url ${CI_API_V4_URL}/projects/50550924/packages/pypi dist/*
+    - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --skip-existing --repository-url ${CI_API_V4_URL}/projects/${REGISTRY_HOST_PROJECT_ID}/packages/pypi dist/*
   except:
     refs:
       - master
