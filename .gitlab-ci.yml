@@ -22,7 +22,7 @@ lint:
     - pipenv run pylint --rcfile=.pylintrc src
   except:
     refs:
-      - master
+      - main
     variables:
       - $CI_COMMIT_MESSAGE =~ /^Setting version to.*/
 
@@ -53,7 +53,7 @@ publish-unstable:
     - TWINE_PASSWORD=${CI_JOB_TOKEN} TWINE_USERNAME=gitlab-ci-token python -m twine upload --skip-existing --repository-url ${CI_API_V4_URL}/projects/${REGISTRY_HOST_PROJECT_ID}/packages/pypi dist/*
   except:
     refs:
-      - master
+      - main
     variables:
       - $CI_COMMIT_MESSAGE =~ /^Setting version to.*/
 
@@ -62,7 +62,7 @@ release:
   before_script:
     - ''
   script:
-    - /scripts/release.sh src --commits
+    - cictl exec release python
   only:
     - master
   except:
