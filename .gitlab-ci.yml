@@ -64,7 +64,7 @@ release:
   script:
     - cictl exec release python
   only:
-    - master
+    - main
   except:
     variables:
       - $CI_COMMIT_MESSAGE =~ /^Setting version to.*/
