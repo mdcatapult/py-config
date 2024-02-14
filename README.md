@@ -114,6 +114,43 @@ pipenv shell
 pipenv run python -m pytest --cov-report term --cov src/ tests/
 ```
 
+## Unit testing config in another library.
+You need to monkey patch the config library and override what the methods do in your test code.
+First create your test version of config. Let's say it is in the module `tests.test_config`.
+
+```python
+from klein_config.config import EnvironmentAwareConfig
+
+config_dict = {
+    'consumer': {
+        'name': 'text_classifier',
+        'queue': 'text_classifier',
+    },
+    'mongo': {
+        'host': 'localhost',
+        'port': 27017,
+        'doclib_database': 'doclib',
+        'documents_collection': 'documents',
+        'text_classification_collection': 'text_classification',
+    }
+}
+
+config = EnvironmentAwareConfig(initial=config_dict)
+
+def get_config():
+    return config
+
+```
+Then in your test code you can monkey patch the config library like this:
+
+```python
+import sys
+sys.modules['klein_config'] = __import__('tests.test_config')
+
+from tests.test_config import config
+```
+Now any test code that uses klein_config will use this test version of the config library.
+
 ### Troubleshooting
 
 If you are unable to run `pipenv shell` and are having permission errors, you can spin up a virtual environment in which to run 
